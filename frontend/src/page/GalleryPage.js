@@ -5,6 +5,27 @@ import 'slick-carousel';
 
 const GalleryPage = () => {
   const sliderRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  const handleAddImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const newImageUrl = e.target.result;
+        const newSlide = `<div><img src="${newImageUrl}" alt="" /></div>`;
+        $(sliderRef.current).slick('slickAdd', newSlide);
+        // Move to the newly added slide
+        const slideIndex = $(sliderRef.current).slick('getSlick').slideCount - 1;
+        $(sliderRef.current).slick('slickGoTo', slideIndex);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     const initializeSlider = () => {
@@ -17,7 +38,9 @@ const GalleryPage = () => {
           slidesToShow: 1,
           centerMode: true,
           variableWidth: true,
-          draggable: false
+          draggable: false,
+          prevArrow: '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg></button>',
+          nextArrow: '<button type="button" class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></button>',
         });
 
         $(sliderRef.current)
@@ -70,6 +93,9 @@ const GalleryPage = () => {
           <img src="https://images.unsplash.com/photo-1477420086945-b99c643e8a3d?dpr=1&auto=format&fit=crop&w=900&h=450&q=80&cs=tinysrgb&crop=" alt="" />
         </div>
       </div>
+
+      <button className="add-image-button" onClick={handleAddImageClick}></button>
+      <input id="file-input" type="file" ref={fileInputRef} onChange={handleFileChange} />
     </div>
   );
 };
