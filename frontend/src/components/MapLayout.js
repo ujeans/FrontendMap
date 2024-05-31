@@ -5,14 +5,67 @@ import "react-svg-map/lib/index.css";
 import southKoreaMap from "@svg-maps/south-korea";
 import GalleryPage from "../page/GalleryPage";
 
+// 지역별 이미지 매핑 객체
+const imageMapping = {
+  // Gangwon: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg",
+  // Gyeonggi: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/LZkivxR.jpg",
+  // Seoul: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/hqcMtrF.jpg",
+  // Incheon: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/l867sBU.jpg",
+  "South Chungcheong":
+    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/7cQCk5I.jpg",
+  Sejong: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg",
+  Daejeon: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/LZkivxR.jpg",
+  "North Chungcheong":
+    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/hqcMtrF.jpg",
+  "North Gyeongsang":
+    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/l867sBU.jpg",
+  Ulsan: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/7cQCk5I.jpg",
+  Daegu: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg",
+  "North Jeolla":
+    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/LZkivxR.jpg",
+  "South Jeolla":
+    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/hqcMtrF.jpg",
+  Gwangju: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/l867sBU.jpg",
+  "South Gyeongsang":
+    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/7cQCk5I.jpg",
+  Jeju: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg",
+};
+
+// 영어 이름을 한글 이름으로 매핑하는 객체
+const locationMapping = {
+  Gangwon: "강원",
+  Gyeonggi: "경기",
+  Seoul: "서울",
+  Incheon: "인천",
+  "South Chungcheong": "충남",
+  Sejong: "세종",
+  Daejeon: "대전",
+  "North Chungcheong": "충북",
+  "North Gyeongsang": "경북",
+  Ulsan: "울산",
+  Daegu: "대구",
+  "North Jeolla": "전북",
+  "South Jeolla": "전남",
+  Gwangju: "광주",
+  "South Gyeongsang": "경남",
+  Jeju: "제주",
+};
+
 const MapLayout = ({ selectedLocation, handleLocationClick }) => {
   const [isMoved, setIsMoved] = useState(false);
+  const [koreanLocation, setKoreanLocation] = useState("");
 
   useEffect(() => {
     if (selectedLocation) {
       setIsMoved(true);
+      const locationNameInKorean =
+        locationMapping[selectedLocation] || selectedLocation;
+      setKoreanLocation(locationNameInKorean);
     }
   }, [selectedLocation]);
+
+  // selectedLocation에 맞는 이미지를 가져옵니다.
+  const selectedImage = imageMapping[selectedLocation] || "";
 
   return (
     <Container>
@@ -26,13 +79,13 @@ const MapLayout = ({ selectedLocation, handleLocationClick }) => {
                 onLocationClick={handleLocationClick}
               />
             </SVGContainer>
-            {/* {selectedLocation && (
-              <SelectedLocation>
-                Selected Location: {selectedLocation}
-              </SelectedLocation>
-            )} */}
           </MapWrapper>
-          {isMoved && <GalleryPage selectedLocation={selectedLocation} />}
+          {isMoved && (
+            <GalleryPage
+              selectedLocation={koreanLocation}
+              selectedImage={selectedImage}
+            />
+          )}
         </Content>
       </Wrapper>
     </Container>

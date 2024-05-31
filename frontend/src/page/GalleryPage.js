@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import left from "../assets/left.svg";
 import right from "../assets/right.svg";
+import cry from "../assets/cry.gif";
 
-const GalleryPage = ({ selectedLocation }) => {
+const GalleryPage = ({ selectedLocation, selectedImage }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -21,10 +22,14 @@ const GalleryPage = ({ selectedLocation }) => {
 
       <Item isVisible={isVisible}>
         <Polaroid>
-          <Image
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg"
-            alt="By Joshua Sortino"
-          />
+          {selectedImage ? (
+            <Image src={selectedImage} alt={`Image of ${selectedLocation}`} />
+          ) : (
+            <NoImageWrapper>
+              <NoImageGif src={cry} alt="No travel gif" />
+              <NoImageText>아직 여행을 가지 못했어요!</NoImageText>
+            </NoImageWrapper>
+          )}
           {selectedLocation && (
             <SelectedLocation>
               <Caption>{selectedLocation}</Caption>
@@ -55,6 +60,7 @@ const SvgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Svg = styled.img`
@@ -79,6 +85,26 @@ const Polaroid = styled.div`
 const Image = styled.img`
   width: 500px;
   height: auto;
+`;
+
+const NoImageWrapper = styled.div`
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const NoImageText = styled.div`
+  font-size: 1.125rem;
+  color: #555;
+  margin-bottom: 10px;
+`;
+
+const NoImageGif = styled.img`
+  width: 300px;
+  /* height: auto; */
+  margin-bottom: 10px;
 `;
 
 const Caption = styled.div`

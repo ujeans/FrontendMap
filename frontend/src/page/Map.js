@@ -5,6 +5,7 @@ const Map = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleLocationClick = event => {
+    console.log(event.target.attributes);
     setSelectedLocation(event.target.attributes.name.value);
   };
 
