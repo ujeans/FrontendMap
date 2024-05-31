@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { SVGMap } from "react-svg-map";
 import "react-svg-map/lib/index.css";
 import southKoreaMap from "@svg-maps/south-korea";
+import GalleryPage from "../page/GalleryPage";
 
 const MapLayout = ({ selectedLocation, handleLocationClick }) => {
   const [isMoved, setIsMoved] = useState(false);
@@ -25,13 +26,13 @@ const MapLayout = ({ selectedLocation, handleLocationClick }) => {
                 onLocationClick={handleLocationClick}
               />
             </SVGContainer>
-            {selectedLocation && (
+            {/* {selectedLocation && (
               <SelectedLocation>
                 Selected Location: {selectedLocation}
               </SelectedLocation>
-            )}
+            )} */}
           </MapWrapper>
-          {isMoved && <InfoBox>Additional Info</InfoBox>}
+          {isMoved && <GalleryPage selectedLocation={selectedLocation} />}
         </Content>
       </Wrapper>
     </Container>
@@ -67,7 +68,7 @@ const Title = styled.div`
 
 const Content = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 100%;
   padding: 0 50px;
@@ -79,27 +80,10 @@ const MapWrapper = styled.div`
   position: relative;
   transition: transform 0.5s ease-in-out;
   transform: ${({ isMoved }) =>
-    isMoved ? "translateX(-50px)" : "translateX(0)"};
+    isMoved ? "translateX(-80px)" : "translateX(0)"};
 `;
 
 const SVGContainer = styled.div`
   width: 100%;
   height: auto;
-`;
-
-const SelectedLocation = styled.p`
-  margin-top: 10px;
-  color: white;
-  font-weight: bold;
-`;
-
-const InfoBox = styled.div`
-  width: 600px;
-  height: 500px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-left: 100px;
-  z-index: 3;
 `;
