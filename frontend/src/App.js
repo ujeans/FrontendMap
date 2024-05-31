@@ -1,7 +1,12 @@
-import "./App.css";
+import React from 'react';
+import GalleryPage from './page/GalleryPage';
 
 function App() {
-  return <></>;
+  return (
+    <div className="App">
+      <GalleryPage />
+    </div>
+  );
 }
 
 export default App;
