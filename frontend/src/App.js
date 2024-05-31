@@ -7,7 +7,6 @@ function App() {
     <>
       <Map />
     </>
-  );
 }
 
 export default App;
