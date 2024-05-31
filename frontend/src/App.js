@@ -1,12 +1,12 @@
-import React from 'react';
-import GalleryPage from './page/GalleryPage';
+import React from "react";
+import "./index.css";
+import Map from "./page/Map";
 
 function App() {
   return (
-    <div className="App">
-      <GalleryPage />
-    </div>
-  );
+    <>
+      <Map />
+    </>
 }
 
 export default App;
